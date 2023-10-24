@@ -3,13 +3,18 @@ import pandas as pd
 import numpy as np
 from numpy import genfromtxt
 
+from sklearn.neural_network import MLPRegressor
+from sklearn.neural_network import MLPClassifier
+import tensorflow as tf
+from tensorflow import keras
+
 if __name__ == '__main__':
     df = genfromtxt('datasetNN.csv', delimiter=';', skip_header=1)
     data = (df[:,0:21])
     data =np.array(data).tolist()
     df1 = pd.read_excel(open('labelGLRW.xlsx', 'rb'))
     y = pd.DataFrame(df1, columns=(['label']))
-    label = np.array(y)
+    label = np.array(y).tolist()
     # print(len(data[0]))
     # for i in range (0,len(data)):
     #     data[i].append(y)
@@ -33,9 +38,31 @@ if __name__ == '__main__':
         for j in range(0,len(x)):
             data1[i].append(x[j])
     data2 = np.array(data1)
-    print(data2.shape)
-    print(label)
+    # print(data2.shape)
+    # print(label)
+
+    # input_shape = data2.shape[1]
+    arr = np.array(data1)
+    input_shape = arr.shape[1]
+    # print(arr.shape)
+    print(len(data1))
+    print(len(label))
 
 
+    #
+    # regr = MLPRegressor(random_state=1, max_iter=500).fit(data1, label)
+    # regr.score(data2, label)
 
+    model = tf.keras.Sequential([
+        keras.layers.Dense(17,activation='relu', input_shape=(input_shape, )),
+        # keras.layers.Dense(9, activation='relu'),
+        keras.layers.Dense(1, activation='linear'),
+        # keras.layers.Dense(16, activation='linear'),
+    ])
+    # Output lay
+    model.compile(optimizer='adam',  # Use the Adam optimizer
+                 loss='mae')  # Mean squared error loss for regression
+
+    model.summary()
+    model.fit(data1, label, epochs=400)
 # See PyCharm help at https://www.jetbrains.com/help/pycharm/
