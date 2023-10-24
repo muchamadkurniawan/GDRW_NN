@@ -32,7 +32,8 @@ if __name__ == '__main__':
         for j in range (4300,7000,24):
             data1.append([data[i-1], j])
     # print(data1)
-    x = [8.000,2154.914,6.744,8.00001640,661.48551718,113.03031200,1777.625,377.28885358,5.564,1.181,0.006,0.000,6236.88,300.000,4300.000]
+    x = [6236.88,12.00,6144.46,847.22,3,3,0.04800000,9.875,
+         8.000,2154.914,6.744,8.00001640,661.48551718,113.03031200,1777.625,377.28885358,5.564,1.181,0.006,0.000,6236.88,300.000,4300.000]
     # print(x)
     for i in range (0,len(data1)):
         for j in range(0,len(x)):
@@ -55,7 +56,7 @@ if __name__ == '__main__':
 
     model = tf.keras.Sequential([
         keras.layers.Dense(17,activation='relu', input_shape=(input_shape, )),
-        # keras.layers.Dense(9, activation='relu'),
+        keras.layers.Dense(9, activation='linear'),
         keras.layers.Dense(1, activation='linear'),
         # keras.layers.Dense(16, activation='linear'),
     ])
